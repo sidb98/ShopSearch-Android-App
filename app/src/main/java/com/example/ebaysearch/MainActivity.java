@@ -19,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+//        https://www.youtube.com/watch?v=pIKdHeOjYNw  - tab layout code from this video
         tabLayout = findViewById(R.id.tabLayout);
         viewPager2 = findViewById(R.id.viewPager2);
         myViewPageAdapter = new MyViewPageAdapter(this);
@@ -47,5 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 tabLayout.selectTab(tabLayout.getTabAt(position));
             }
         });
+
+
     }
 }

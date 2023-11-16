@@ -5,8 +5,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.ebaysearch.fragments.SearchFragment;
-import com.example.ebaysearch.fragments.WishlistFragment;
+import com.example.ebaysearch.fragments_main_activity.SearchFragment;
+import com.example.ebaysearch.fragments_main_activity.WishlistFragment;
 
 public class MyViewPageAdapter extends FragmentStateAdapter {
 

@@ -6,27 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/app_title"
+
+    <TextView
+        android:id="@+id/product_search_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/Theme.EbaySearch.AppBarOverlay">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:minHeight="?actionBarSize"
-            android:padding="@dimen/appbar_padding"
-            android:text="@string/product_search"
-            android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title" />
-    </com.google.android.material.appbar.AppBarLayout>
+        android:background="@color/purple_500"
+        android:minHeight="?actionBarSize"
+        android:padding="@dimen/appbar_padding"
+        android:text="@string/product_search"
+        android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
+        android:textColor="@color/white" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/app_title"
+        android:layout_below="@id/product_search_title"
         app:tabBackground="@color/purple_500"
         app:tabIndicator="@color/white"
         app:tabTextColor="@color/white">

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:paddingBottom="20dp"
+    app:cardElevation="4dp"
+    card_view:cardCornerRadius="8dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/item_image"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:src="@drawable/ic_launcher_background" />
+
+        <TextView
+            android:id="@+id/item_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/item_image"
+            android:text="PRODUCT TITLE"
+            android:gravity="center"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_below="@id/item_title"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/cart_plus"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/item_zipcode"
+            android:layout_below="@id/item_title"
+            android:text="Zip: *****"
+            android:textAppearance="?attr/textAppearanceListItem" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/item_shipping"
+            android:layout_below="@id/item_zipcode"
+            android:text="Free"
+            android:textAppearance="?attr/textAppearanceListItem" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/item_condition"
+            android:layout_below="@id/item_shipping"
+            android:text="New"
+            android:textAppearance="?attr/textAppearanceListItem" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/item_price"
+            android:layout_alignBottom="@id/item_condition"
+            android:layout_alignParentEnd="true"
+            android:text="$"
+            android:textColor="@color/purple_500"
+            android:textAppearance="?attr/textAppearanceListItem" />
+
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>

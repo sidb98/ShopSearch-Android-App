@@ -1,6 +1,7 @@
-package com.example.ebaysearch.fragments;
+package com.example.ebaysearch.fragments_main_activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -25,6 +26,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ebaysearch.R;
+import com.example.ebaysearch.SearchedResults;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -193,6 +195,11 @@ public class SearchFragment extends Fragment {
                                 // Now you have your items array
                                 Log.d("SEARCH_API.Response", ack+" with "+items.length()+" items");
                                 Log.d("SEARCH_API.Response", items.toString());
+
+                                Intent intent = new Intent(getContext(), SearchedResults.class);
+                                intent.putExtra("items", items.toString());
+                                startActivity(intent);
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }

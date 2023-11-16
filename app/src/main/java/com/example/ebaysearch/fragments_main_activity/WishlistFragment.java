@@ -1,4 +1,4 @@
-package com.example.ebaysearch.fragments;
+package com.example.ebaysearch.fragments_main_activity;
 
 import android.os.Bundle;
 

@@ -1,6 +1,8 @@
 package com.example.ebaysearch;
 
-public class SearchItemModel {
+import java.io.Serializable;
+
+public class SearchItemModel implements Serializable {
     private String itemId;
     private String image;
     private String link;

@@ -5,14 +5,13 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.example.ebaysearch.databinding.ActivityMainBinding;
 import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
 
     TabLayout tabLayout;
     ViewPager2 viewPager2;
-    MyViewPageAdapter myViewPageAdapter;
+    ViewPageAdapterMainActivity myViewPageAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 //        https://www.youtube.com/watch?v=pIKdHeOjYNw  - tab layout code from this video
         tabLayout = findViewById(R.id.tabLayout);
         viewPager2 = findViewById(R.id.viewPager2);
-        myViewPageAdapter = new MyViewPageAdapter(this);
+        myViewPageAdapter = new ViewPageAdapterMainActivity(this);
         viewPager2.setAdapter(myViewPageAdapter);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

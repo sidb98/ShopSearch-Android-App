@@ -24,8 +24,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Please enter mandatory field"
-        android:visibility="gone"
-        android:textColor="@color/red"/>
+        android:textColor="@color/red"
+        android:visibility="gone" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -108,10 +108,10 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayoutDistance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:id="@+id/linearLayoutDistance"
         android:visibility="gone">
 
         <TextView
@@ -120,10 +120,10 @@
             android:text="Distance" />
 
         <EditText
+            android:id="@+id/editTextMiles"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:id="@+id/editTextMiles"
             android:hint="Miles from" />
 
         <TextView
@@ -138,11 +138,11 @@
             android:orientation="vertical">
 
             <RadioButton
+                android:id="@+id/currentLocationRadioButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Current Location"
-                android:id="@+id/currentLocationRadioButton"
-                android:layout_marginLeft="20dp" />
+                android:layout_marginLeft="20dp"
+                android:text="Current Location" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -150,27 +150,27 @@
                 android:orientation="horizontal">
 
                 <RadioButton
+                    android:id="@+id/zipcodeRadioButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/zipcodeRadioButton"
                     android:layout_marginLeft="20dp" />
 
                 <EditText
+                    android:id="@+id/editTextZipcode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
                     android:ems="10"
-                    android:hint="Zipcode"
-                    android:id="@+id/editTextZipcode"
-                    android:layout_marginRight="15dp" />
-                <TextView
-                    android:id="@+id/zipcodeErrorTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Please enter mandatory field"
-                    android:visibility="gone"
-                    android:textColor="@color/red"/>
-
+                    android:hint="Zipcode" />
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/zipcodeErrorTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Please enter mandatory field"
+                android:textColor="@color/red"
+                android:visibility="gone" />
 
         </RadioGroup>
     </LinearLayout>

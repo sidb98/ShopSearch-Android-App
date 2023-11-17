@@ -15,6 +15,9 @@
         android:theme="@style/Theme.EbaySearch.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".SingleItemActivity"
+            android:exported="false" />
+        <activity
             android:name=".SearchedResults"
             android:exported="false" />
         <activity

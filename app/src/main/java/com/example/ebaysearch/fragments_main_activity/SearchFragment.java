@@ -129,19 +129,25 @@ public class SearchFragment extends Fragment {
         boolean isZipcode = zipCodeRadioButton.isChecked();
         String zipcode = zipCodeEditText.getText().toString();
 
+
+
         if (keyword.isEmpty()) {
-            Log.d("Keyword", "performSearch: keyword is empty");
+            Log.d("FORM_CHECK.KEYWORD", "performSearch: keyword is empty");
             keywordErrorTextView.setVisibility(View.VISIBLE);
-            return;
-        }
-        Log.d("Trial", isZipcode + " " + zipcode);
-
-        if (isZipcode && zipcode.isEmpty()) {
-            zipcodeErrorTextView.setVisibility(View.VISIBLE);
+            if (isNearbySearch && isZipcode && zipcode.isEmpty()) {
+                zipcodeErrorTextView.setVisibility(View.VISIBLE);
+            }
             return;
         }
 
-        HashMap<String,String> categoryValues = new HashMap<>();
+
+
+        miles = miles.isEmpty() ? "10" : miles;
+        zipcode = zipcode.isEmpty() ? "90007" : zipcode;
+
+        Log.d("FORM_CHECK", "FORM CHECK PASSED ");
+
+        HashMap<String, String> categoryValues = new HashMap<>();
         categoryValues.put("Art", "550");
         categoryValues.put("Baby", "2984");
         categoryValues.put("Books", "267");
@@ -152,11 +158,14 @@ public class SearchFragment extends Fragment {
         categoryValues.put("Video Games & Consoles", "1249");
 
 
-
         String baseUrl = "https://ebay-backend-404323.wl.r.appspot.com/api/search";
 
         Uri.Builder builder = Uri.parse(baseUrl).buildUpon();
         builder.appendQueryParameter("keyword", keyword);
+        builder.appendQueryParameter("distance", miles);
+        builder.appendQueryParameter("zipcode", zipcode);
+
+
 
         if (!category.equals("All"))
             builder.appendQueryParameter("category", categoryValues.get(category));
@@ -169,13 +178,7 @@ public class SearchFragment extends Fragment {
             builder.appendQueryParameter("localpickup", "true");
         if (isFreeShipping)
             builder.appendQueryParameter("freeshipping", "true");
-        if (isNearbySearch) {
-            builder.appendQueryParameter("distance", miles);
-            if (isCurrentLocation)
-                builder.appendQueryParameter("zipcode", "90007");
-            else
-                builder.appendQueryParameter("zipcode", zipcode);
-        }
+
 
         String url = builder.build().toString();
         Log.d("SEARCH_API.URL", url);
@@ -193,7 +196,7 @@ public class SearchFragment extends Fragment {
                                 String ack = response.getString("ack");
                                 JSONArray items = response.getJSONArray("items");
                                 // Now you have your items array
-                                Log.d("SEARCH_API.Response", ack+" with "+items.length()+" items");
+                                Log.d("SEARCH_API.Response", ack + " with " + items.length() + " items");
                                 Log.d("SEARCH_API.Response", items.toString());
 
                                 Intent intent = new Intent(getContext(), SearchedResults.class);
@@ -231,6 +234,7 @@ public class SearchFragment extends Fragment {
         currentLocationRadioButton.setChecked(false);
         zipCodeRadioButton.setChecked(false);
         zipCodeEditText.setText("");
+        zipcodeErrorTextView.setVisibility(View.GONE);
 
     }
 }

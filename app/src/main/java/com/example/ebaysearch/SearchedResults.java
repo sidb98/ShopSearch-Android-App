@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -62,7 +63,9 @@ public class SearchedResults extends AppCompatActivity {
             public void onClick(View view) {
                 int position = recyclerView.getChildLayoutPosition(view);
                 SearchItemModel item = itemList.get(position);
-                Toast.makeText(SearchedResults.this, "Clicked: " + item.getShippingInfo(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(SearchedResults.this, SingleItemActivity.class);
+                intent.putExtra("itemData", item);
+                startActivity(intent);
             }
         };
 

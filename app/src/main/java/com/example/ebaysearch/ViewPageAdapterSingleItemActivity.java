@@ -1,6 +1,7 @@
 package com.example.ebaysearch;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -20,7 +21,11 @@ public class ViewPageAdapterSingleItemActivity extends FragmentStateAdapter {
     public ViewPageAdapterSingleItemActivity(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }
+    public void setSingleItemData(JSONObject data) {
+        singleItemData = data;
+        Log.d("VIEW_PAGER.Set_Data", "singleItemData: " + singleItemData.toString());
 
+    }
 
     @NonNull
     @Override

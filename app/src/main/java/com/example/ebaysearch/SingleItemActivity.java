@@ -1,10 +1,13 @@
 package com.example.ebaysearch;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -12,14 +15,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.ebaysearch.fragments_single_item_activity.ProductFragment;
 import com.google.android.material.tabs.TabLayout;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 public class SingleItemActivity extends AppCompatActivity {
 
@@ -29,12 +28,21 @@ public class SingleItemActivity extends AppCompatActivity {
     SearchItemModel item;
     ViewPageAdapterSingleItemActivity viewPagerAdapter;
 
+    ViewModelSingleItem itemViewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_item);
+
+        itemViewModel = new ViewModelProvider(this).get(ViewModelSingleItem.class);
+
+
         item = (SearchItemModel) getIntent().getSerializableExtra("itemData");
+
+        itemViewModel.setItemData(item);
+
 
         tabLayout = findViewById(R.id.tabLayout);
         viewPager2 = findViewById(R.id.viewPager2);
@@ -69,6 +77,14 @@ public class SingleItemActivity extends AppCompatActivity {
 
         fetchItemDetails(item.getItemId());
 
+        ImageButton backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish(); // Close this activity and return to the previous one
+            }
+        });
+
     }
 
     private void fetchItemDetails(String itemId) {
@@ -79,16 +95,22 @@ public class SingleItemActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("SingleItemActivity", "Response: " + response);
-
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            Log.d("SINGLE_ITEM_API", "Response: " + jsonObject.toString());
+                            itemViewModel.setSingleItemData(jsonObject);
+                        } catch (JSONException e) {
+                            Log.e("SINGLE_ITEM_API.ERROR", "JSON Parsing error: " + e.getMessage());
+                        }
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                // Handle error
-                Log.e("SingleItemActivity", "Error fetching item details: " + error.getMessage());
-            }
-        });
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("SINGLE_ITEM.ERROR", "Error: " + error.getMessage());
+                    }
+                }
+        );
 
         queue.add(stringRequest);
     }

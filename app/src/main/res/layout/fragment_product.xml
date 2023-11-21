@@ -4,11 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/linearLayoutParent"
     tools:context=".fragments_single_item_activity.ProductFragment">
 
     <HorizontalScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="150dp"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
         android:layout_gravity="center_vertical"
         android:scrollbars="none" >
 
@@ -25,7 +26,10 @@
         android:id="@+id/textViewTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textStyle="bold"
+        android:textSize="25dp"/>
+"/>
 
     <TextView
         android:id="@+id/textViewPriceWithShipping"
@@ -33,6 +37,7 @@
         android:layout_height="wrap_content"
         android:text="$$ with shipping"
         android:textColor="@color/purple_500"
+        android:layout_marginBottom="10dp"
         android:textStyle="bold" />
 
     <View

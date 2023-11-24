@@ -39,18 +39,21 @@ public class SearchedResults extends AppCompatActivity {
             searchItems = new JSONArray(searchedResultsString);
             for (int i = 0; i < searchItems.length(); i++) {
                 JSONObject itemObj = searchItems.getJSONObject(i);
-                SearchItemModel  item = new SearchItemModel();
-                item.setItemId(itemObj.getString("itemId"));
-                item.setImage(itemObj.getString("image"));
-                item.setLink(itemObj.getString("link"));
-                item.setTitle(itemObj.getString("title"));
-                item.setPrice(itemObj.getString("price"));
-                item.setShipping(itemObj.getString("shipping"));
-                item.setZip(itemObj.getString("zip"));
+                String itemId = itemObj.getString("itemId");
+                String image = itemObj.getString("image");
+                String link = itemObj.getString("link");
+                String title = itemObj.getString("title");
+                String price = itemObj.getString("price");
+                String shipping = itemObj.getString("shipping");
+                String zip = itemObj.getString("zip");
                 JSONObject sellerInfoObj = itemObj.getJSONObject("sellerInfo");
-                item.setSellerInfo(sellerInfoObj.toString());
+                String sellerInfo = sellerInfoObj.toString();
                 JSONObject shippingInfoObj = itemObj.getJSONObject("shippingInfo");
-                item.setShippingInfo(shippingInfoObj.toString());
+                String shippingInfo = shippingInfoObj.toString();
+
+                SearchItemModel item = new SearchItemModel(itemId, image, link, title, price,
+                        shipping, zip, sellerInfo, shippingInfo);
+
 
                 itemList.add(item);
             }

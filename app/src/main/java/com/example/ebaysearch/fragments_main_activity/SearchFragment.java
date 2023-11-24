@@ -26,6 +26,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ebaysearch.R;
+import com.example.ebaysearch.SearchItemModel;
 import com.example.ebaysearch.SearchedResults;
 
 import org.json.JSONArray;
@@ -57,6 +58,7 @@ public class SearchFragment extends Fragment {
 
     private TextView zipcodeErrorTextView;
 
+    private SearchItemModel singleItem;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

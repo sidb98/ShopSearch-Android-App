@@ -1,6 +1,5 @@
 package com.example.ebaysearch.fragments_single_item_activity;
 
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -17,7 +16,8 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonArrayRequest;
+
 import com.android.volley.toolbox.Volley;
 import com.example.ebaysearch.R;
 import com.example.ebaysearch.SearchItemModel;
@@ -26,11 +26,10 @@ import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
+
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+
 
 
 public class PhotosFragment extends Fragment {
@@ -75,38 +74,22 @@ public class PhotosFragment extends Fragment {
 
 
     private void callGoogleSearchApi() {
-        RequestQueue queue = Volley.newRequestQueue(requireContext());
-        String url = "https://www.googleapis.com/customsearch/v1";
-        Log.d("PhotosFragment", "callGoogleSearchApi: " + title);
-        Map<String, String> params = new HashMap<>();
-        params.put("q", this.title);
-        params.put("cx", "051e7706630e941c0"); // Replace with actual CX
-        params.put("imageSize", "huge");
-        params.put("imageType", "news");
-        params.put("num", "8");
-        params.put("searchType", "image");
-        params.put("key", "AIzaSyAE_wV6ANqE0FIwJ3zTdXud_Oj2co5tqfE");
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        String url = "https://ebay-backend-404323.wl.r.appspot.com/api/photos?productTitle=" + title;
 
-        String queryParams = "";
-        for (String key : params.keySet()) {
-            queryParams += "&" + key + "=" + Uri.encode(params.get(key));
-        }
-
-        url += "?" + queryParams.substring(1);
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONArray>() {
                     @Override
-                    public void onResponse(JSONObject response) {
+                    public void onResponse(JSONArray response) {
                         try {
-                            JSONArray items = response.getJSONArray("items");
-                            for (int i = 0; i < items.length(); i++) {
-                                JSONObject item = items.getJSONObject(i);
-                                imageUrls.add(item.getString("link"));
+                            imageUrls.clear();
+                            for (int i = 0; i < response.length(); i++) {
+                                String imageUrl = response.getString(i);
+                                imageUrls.add(imageUrl);
                             }
                             Log.d("Google_API.Response", response.toString());
                             setPhotos();
-                            // Use itemLinks as needed for your UI
+                            // Use imageUrls as needed for your UI
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -120,6 +103,7 @@ public class PhotosFragment extends Fragment {
         });
 
         // Add the request to the RequestQueue.
-        queue.add(jsonObjectRequest);
+        queue.add(jsonArrayRequest);
     }
+
 }

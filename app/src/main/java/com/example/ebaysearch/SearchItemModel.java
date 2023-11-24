@@ -13,6 +13,18 @@ public class SearchItemModel implements Serializable {
     private String sellerInfo;
     private String shippingInfo;
 
+    public SearchItemModel(String itemId, String image, String link, String title, String price, String shipping, String zip, String sellerInfo, String shippingInfo) {
+        this.itemId = itemId;
+        this.image = image;
+        this.link = link;
+        this.title = title;
+        this.price = price;
+        this.shipping = shipping;
+        this.zip = zip;
+        this.sellerInfo = sellerInfo;
+        this.shippingInfo = shippingInfo;
+    }
+
     public String getItemId() {
         return itemId;
     }

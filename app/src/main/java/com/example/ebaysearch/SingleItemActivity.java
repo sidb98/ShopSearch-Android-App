@@ -1,12 +1,9 @@
 package com.example.ebaysearch;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -30,7 +27,7 @@ public class SingleItemActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager2 viewPager2;
 
-    private SearchItemModel item;
+    private ItemModel item;
     private ViewPageAdapterSingleItemActivity viewPagerAdapter;
 
     private ViewModelSingleItem itemViewModel;
@@ -43,7 +40,7 @@ public class SingleItemActivity extends AppCompatActivity {
 
         itemViewModel = new ViewModelProvider(this).get(ViewModelSingleItem.class);
 
-        item = (SearchItemModel) getIntent().getSerializableExtra("itemData");
+        item = (ItemModel) getIntent().getSerializableExtra("itemData");
 
         itemViewModel.setItemData(item);
 
@@ -94,7 +91,7 @@ public class SingleItemActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                WishlistItemModel wishlistItem = new WishlistItemModel(
+                ItemModel wishlistItem = new ItemModel(
                         item.getItemId(), item.getImage(), item.getTitle(), item.getPrice(), item.getShipping()
                 );
 
@@ -146,7 +143,7 @@ public class SingleItemActivity extends AppCompatActivity {
         queue.add(stringRequest);
     }
 
-    private void addItemToWishlist(WishlistItemModel item) {
+    private void addItemToWishlist(ItemModel item) {
         WishlistManager.getInstance(getApplicationContext()).addItemToWishlist(item, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {

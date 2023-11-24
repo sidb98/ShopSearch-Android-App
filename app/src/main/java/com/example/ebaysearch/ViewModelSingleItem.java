@@ -7,13 +7,13 @@ import org.json.JSONObject;
 
 public class ViewModelSingleItem extends ViewModel{
 
-    private final MutableLiveData<SearchItemModel> itemData = new MutableLiveData<>();
+    private final MutableLiveData<ItemModel> itemData = new MutableLiveData<>();
     private final MutableLiveData<JSONObject> singleItemData = new MutableLiveData<>();
-    public void setItemData(SearchItemModel data) {
+    public void setItemData(ItemModel data) {
         itemData.setValue(data);
     }
 
-    public MutableLiveData<SearchItemModel> getItemData() {
+    public MutableLiveData<ItemModel> getItemData() {
         return itemData;
     }
 

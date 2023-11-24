@@ -1,5 +1,6 @@
 package com.example.ebaysearch;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +14,11 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class SimilarItemAdapter extends RecyclerView.Adapter<SimilarItemAdapter.ViewHolder> {
-    private List<SimilarItemModel> similarItems;
 
-    public SimilarItemAdapter(List<SimilarItemModel> similarItems) {
+public class SimilarItemAdapter extends RecyclerView.Adapter<SimilarItemAdapter.ViewHolder> {
+    private List<ItemModel> similarItems;
+
+    public SimilarItemAdapter(List<ItemModel> similarItems) {
         this.similarItems = similarItems;
     }
     @NonNull
@@ -27,7 +29,8 @@ public class SimilarItemAdapter extends RecyclerView.Adapter<SimilarItemAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull SimilarItemAdapter.ViewHolder holder, int position) {
-        SimilarItemModel item = similarItems.get(position);
+        ItemModel item = similarItems.get(position);
+        Log.d("SimilarItemAdapter", "onBindViewHolder: " + item.getTitle() + " " + item.getPrice() + " " + item.getShipping() + " " + item.getDaysLeft() + " " + item.getImage());
         holder.textViewTitle.setText(item.getTitle());
         holder.textViewPrice.setText(item.getPrice());
         holder.textViewShipping.setText(item.getShipping());

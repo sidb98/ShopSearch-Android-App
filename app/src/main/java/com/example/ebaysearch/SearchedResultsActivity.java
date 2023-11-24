@@ -2,7 +2,6 @@ package com.example.ebaysearch;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -10,7 +9,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,7 +16,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class SearchedResults extends AppCompatActivity {
+public class SearchedResultsActivity extends AppCompatActivity {
 
     private JSONArray searchItems;
     private RecyclerView recyclerView;
@@ -34,7 +32,7 @@ public class SearchedResults extends AppCompatActivity {
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
         String searchedResultsString = getIntent().getStringExtra("items");
-        ArrayList<SearchItemModel> itemList = new ArrayList<>();
+        ArrayList<ItemModel> itemList = new ArrayList<>();
         try {
             searchItems = new JSONArray(searchedResultsString);
             for (int i = 0; i < searchItems.length(); i++) {
@@ -51,7 +49,7 @@ public class SearchedResults extends AppCompatActivity {
                 JSONObject shippingInfoObj = itemObj.getJSONObject("shippingInfo");
                 String shippingInfo = shippingInfoObj.toString();
 
-                SearchItemModel item = new SearchItemModel(itemId, image, link, title, price,
+                ItemModel item = new ItemModel(itemId, image, link, title, price,
                         shipping, zip, sellerInfo, shippingInfo);
 
 
@@ -65,8 +63,8 @@ public class SearchedResults extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 int position = recyclerView.getChildLayoutPosition(view);
-                SearchItemModel item = itemList.get(position);
-                Intent intent = new Intent(SearchedResults.this, SingleItemActivity.class);
+                ItemModel item = itemList.get(position);
+                Intent intent = new Intent(SearchedResultsActivity.this, SingleItemActivity.class);
                 intent.putExtra("itemData", item);
                 startActivity(intent);
             }

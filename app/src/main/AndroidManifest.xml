@@ -18,7 +18,7 @@
             android:name=".SingleItemActivity"
             android:exported="false" />
         <activity
-            android:name=".SearchedResults"
+            android:name=".SearchedResultsActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

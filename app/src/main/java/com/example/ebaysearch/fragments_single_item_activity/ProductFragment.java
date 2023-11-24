@@ -3,10 +3,8 @@ package com.example.ebaysearch.fragments_single_item_activity;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.ebaysearch.R;
-import com.example.ebaysearch.SearchItemModel;
+import com.example.ebaysearch.ItemModel;
 import com.example.ebaysearch.ViewModelSingleItem;
 import com.squareup.picasso.Picasso;
 
@@ -30,7 +28,7 @@ import java.util.List;
 
 public class ProductFragment extends Fragment {
     JSONObject singleItemData;
-    SearchItemModel item;
+    ItemModel item;
     JSONArray productImg;
     String link;
     String price;

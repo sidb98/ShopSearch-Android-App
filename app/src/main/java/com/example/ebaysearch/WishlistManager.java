@@ -35,7 +35,7 @@ public class WishlistManager {
         return requestQueue;
     }
 
-    public void addItemToWishlist(WishlistItemModel item, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+    public void addItemToWishlist(ItemModel item, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
         String url = "https://ebay-backend-404323.wl.r.appspot.com/api/favorite";
 
         JSONObject postData = new JSONObject();

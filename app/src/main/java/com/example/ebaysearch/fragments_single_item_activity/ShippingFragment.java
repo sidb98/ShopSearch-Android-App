@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.ebaysearch.R;
-import com.example.ebaysearch.SearchItemModel;
+import com.example.ebaysearch.ItemModel;
 import com.example.ebaysearch.ViewModelSingleItem;
 
 import org.json.JSONException;
@@ -25,7 +25,7 @@ import org.json.JSONObject;
 
 public class ShippingFragment extends Fragment {
 
-    private SearchItemModel item;
+    private ItemModel item;
 
     private JSONObject singleItemData;
     String returnPolicy;

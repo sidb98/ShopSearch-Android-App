@@ -1,6 +1,5 @@
 package com.example.ebaysearch;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +15,10 @@ import java.util.ArrayList;
 
 public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.ViewHolder> {
 
-    private ArrayList<SearchItemModel> searchItems;
+    private ArrayList<ItemModel> searchItems;
     private View.OnClickListener clickListener;
 
-    public SearchItemAdapter(ArrayList<SearchItemModel> searchItems, View.OnClickListener clickListener) {
+    public SearchItemAdapter(ArrayList<ItemModel> searchItems, View.OnClickListener clickListener) {
         this.searchItems = searchItems;
         this.clickListener = clickListener;
     }
@@ -34,7 +33,7 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.Vi
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        SearchItemModel item = searchItems.get(position);
+        ItemModel item = searchItems.get(position);
         holder.itemTitle.setText(item.getTitle());
         holder.itemPrice.setText("$" + item.getPrice());
         holder.itemZipcode.setText("Zip: " + item.getZip());

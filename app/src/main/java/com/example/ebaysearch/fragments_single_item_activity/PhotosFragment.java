@@ -20,7 +20,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 
 import com.android.volley.toolbox.Volley;
 import com.example.ebaysearch.R;
-import com.example.ebaysearch.SearchItemModel;
+import com.example.ebaysearch.ItemModel;
 import com.example.ebaysearch.ViewModelSingleItem;
 import com.squareup.picasso.Picasso;
 
@@ -34,7 +34,7 @@ import java.util.ArrayList;
 
 public class PhotosFragment extends Fragment {
 
-    SearchItemModel item;
+    ItemModel item;
     String title;
     ArrayList<String> imageUrls = new ArrayList<>();
 

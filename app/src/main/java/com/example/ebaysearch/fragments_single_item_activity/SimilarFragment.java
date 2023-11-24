@@ -19,9 +19,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ebaysearch.R;
-import com.example.ebaysearch.SearchItemModel;
+import com.example.ebaysearch.ItemModel;
 import com.example.ebaysearch.SimilarItemAdapter;
-import com.example.ebaysearch.SimilarItemModel;
 import com.example.ebaysearch.ViewModelSingleItem;
 
 import org.json.JSONArray;
@@ -34,7 +33,7 @@ import java.util.List;
 
 public class SimilarFragment extends Fragment {
 
-    private SearchItemModel item;
+    private ItemModel item;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,7 +62,7 @@ public class SimilarFragment extends Fragment {
                     public void onResponse(JSONObject response) {
                         Log.d("Similar_Item.Response", response.toString());
 
-                        List<SimilarItemModel> itemsList = new ArrayList<>();
+                        List<ItemModel> itemsList = new ArrayList<>();
                         try {
                             JSONArray items = response.getJSONArray("items");
                             for (int i = 0; i < items.length(); i++) {
@@ -76,7 +75,8 @@ public class SimilarFragment extends Fragment {
                                 String link = item.optString("link");
                                 String daysLeft = item.optString("daysLeft");
 
-                                SimilarItemModel similarItem = new SimilarItemModel(itemId,title, price, shipping, image, link, daysLeft);
+
+                                ItemModel similarItem = new ItemModel(itemId, title, price, shipping, image, link, daysLeft);
                                 itemsList.add(similarItem);
                             }
 //                             Update RecyclerView here, if this code is on the UI thread
@@ -96,7 +96,7 @@ public class SimilarFragment extends Fragment {
         // Add the request to the RequestQueue.
         queue.add(jsonObjectRequest);
     }
-    private void setupRecyclerView(List<SimilarItemModel> itemsList) {
+    private void setupRecyclerView(List<ItemModel> itemsList) {
         RecyclerView recyclerView = getView().findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         SimilarItemAdapter adapter = new SimilarItemAdapter(itemsList);

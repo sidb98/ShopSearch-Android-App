@@ -1,14 +1,19 @@
 package com.example.ebaysearch;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import org.json.JSONObject;
 
-public class ViewModelSingleItem extends ViewModel{
+import java.util.List;
+
+public class ViewModelItem extends ViewModel{
 
     private final MutableLiveData<ItemModel> itemData = new MutableLiveData<>();
     private final MutableLiveData<JSONObject> singleItemData = new MutableLiveData<>();
+
     public void setItemData(ItemModel data) {
         itemData.setValue(data);
     }
@@ -24,6 +29,7 @@ public class ViewModelSingleItem extends ViewModel{
     public MutableLiveData<JSONObject> getSingleItemData() {
         return singleItemData;
     }
+
 
 
 }

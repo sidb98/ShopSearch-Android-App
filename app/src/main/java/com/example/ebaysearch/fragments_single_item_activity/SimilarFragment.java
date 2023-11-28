@@ -21,7 +21,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.ebaysearch.R;
 import com.example.ebaysearch.ItemModel;
 import com.example.ebaysearch.SimilarItemAdapter;
-import com.example.ebaysearch.ViewModelSingleItem;
+import com.example.ebaysearch.ViewModelItem;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,7 +40,7 @@ public class SimilarFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_similar, container, false);
-        ViewModelSingleItem itemViewModel = new ViewModelProvider(requireActivity()).get(ViewModelSingleItem.class);
+        ViewModelItem itemViewModel = new ViewModelProvider(requireActivity()).get(ViewModelItem.class);
         itemViewModel.getItemData().observe(getViewLifecycleOwner(), item -> {
             // Use the item data here
             this.item = item;

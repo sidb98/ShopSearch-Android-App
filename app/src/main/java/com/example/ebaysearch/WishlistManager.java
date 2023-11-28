@@ -11,14 +11,21 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 public class WishlistManager {
     private static WishlistManager instance;
     private RequestQueue requestQueue;
     private static Context ctx;
 
+    private List<ItemModel> wishlist;
+
     private WishlistManager(Context context) {
         ctx = context;
         requestQueue = getRequestQueue();
+        wishlist = new ArrayList<>();
     }
 
     public static synchronized WishlistManager getInstance(Context context) {
@@ -51,12 +58,31 @@ public class WishlistManager {
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, postData, listener, errorListener);
         requestQueue.add(jsonObjectRequest);
+
+        // Add item to local wishlist
+        wishlist.add(item);
     }
 
     public void removeItemFromWishlist(String itemId, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
-        String url = "https://ebay-backend-404323.wl.r.appspot.com//api/favorite/" + itemId;
+        String url = "https://ebay-backend-404323.wl.r.appspot.com/api/favorite/" + itemId;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.DELETE, url, null, listener, errorListener);
         requestQueue.add(jsonObjectRequest);
+
+        // Remove item from local wishlist
+        for (Iterator<ItemModel> iterator = wishlist.iterator(); iterator.hasNext();) {
+            ItemModel item = iterator.next();
+            if (item.getItemId().equals(itemId)) {
+                iterator.remove();
+            }
+        }
+    }
+
+    public void addItem(ItemModel item) {
+        wishlist.add(item);
+    }
+
+    public List<ItemModel> getWishlist() {
+        return wishlist;
     }
 }

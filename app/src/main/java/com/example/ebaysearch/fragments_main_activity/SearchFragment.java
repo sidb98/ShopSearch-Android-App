@@ -39,7 +39,6 @@ import java.util.HashMap;
 public class SearchFragment extends Fragment {
 
     private EditText keywordEditText;
-
     private TextView keywordErrorTextView;
     private Spinner categorySpinner;
     private CheckBox newCheckBox;
@@ -50,14 +49,10 @@ public class SearchFragment extends Fragment {
     private CheckBox nearbySearchCheckBox;
     private LinearLayout linearLayoutDistance;
     private EditText milesEditText;
-
     private RadioButton currentLocationRadioButton;
-
     private RadioButton zipCodeRadioButton;
     private EditText zipCodeEditText;
-
     private TextView zipcodeErrorTextView;
-
     private ItemModel singleItem;
 
     @Override

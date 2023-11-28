@@ -1,39 +1,39 @@
 package com.example.ebaysearch;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.ViewHolder> {
+public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHolder>{
 
-    private ArrayList<ItemModel> searchItems;
-    private View.OnClickListener clickListener;
+    private List<ItemModel> WishlistItem;
 
-    public SearchItemAdapter(ArrayList<ItemModel> searchItems, View.OnClickListener clickListener) {
-        this.searchItems = searchItems;
-        this.clickListener = clickListener;
+    public WishlistAdapter(List<ItemModel> item) {
+        this.WishlistItem = item;
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public WishlistAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.search_item_recycler_view_row, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
-        view.setOnClickListener(clickListener);
+        WishlistAdapter.ViewHolder viewHolder = new WishlistAdapter.ViewHolder(view);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        ItemModel item = searchItems.get(position);
+    public void onBindViewHolder(@NonNull WishlistAdapter.ViewHolder holder, int position) {
+        ItemModel item = WishlistItem.get(position);
         holder.itemTitle.setText(item.getTitle());
         holder.itemPrice.setText("$" + item.getPrice());
         holder.itemZipcode.setText("Zip: " + item.getZip());
@@ -43,11 +43,12 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.Vi
                 .load(item.getImage())
                 .error(R.drawable.ic_launcher_background) // optional, shown if there's an error loading the image
                 .into(holder.itemImage);
+
     }
 
     @Override
     public int getItemCount() {
-        return searchItems.size();
+        return WishlistItem.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

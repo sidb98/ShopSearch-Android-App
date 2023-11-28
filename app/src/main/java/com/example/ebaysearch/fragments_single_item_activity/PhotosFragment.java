@@ -21,7 +21,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ebaysearch.R;
 import com.example.ebaysearch.ItemModel;
-import com.example.ebaysearch.ViewModelSingleItem;
+import com.example.ebaysearch.ViewModelItem;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -48,7 +48,7 @@ public class PhotosFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_photos, container, false);
         photoLinearLayout = view.findViewById(R.id.photoLinearLayout);
 
-        ViewModelSingleItem itemViewModel = new ViewModelProvider(requireActivity()).get(ViewModelSingleItem.class);
+        ViewModelItem itemViewModel = new ViewModelProvider(requireActivity()).get(ViewModelItem.class);
         itemViewModel.getItemData().observe(getViewLifecycleOwner(), item -> {
             // Use the item data here
             this.item = item;

@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.example.ebaysearch.R;
 import com.example.ebaysearch.ItemModel;
-import com.example.ebaysearch.ViewModelSingleItem;
+import com.example.ebaysearch.ViewModelItem;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,7 +47,7 @@ public class ShippingFragment extends Fragment {
         textViewReturnPolicy = view.findViewById(R.id.textViewReturnPolicy);
         textViewStoreName = view.findViewById(R.id.textViewStoreName);
 
-        ViewModelSingleItem itemViewModel = new ViewModelProvider(requireActivity()).get(ViewModelSingleItem.class);
+        ViewModelItem itemViewModel = new ViewModelProvider(requireActivity()).get(ViewModelItem.class);
         itemViewModel.getItemData().observe(getViewLifecycleOwner(), item -> {
             // Use the item data here
             this.item = item;

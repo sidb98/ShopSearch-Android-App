@@ -1,6 +1,7 @@
 package com.example.ebaysearch;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -22,6 +23,9 @@ import com.google.android.material.tabs.TabLayout;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SingleItemActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;
@@ -30,7 +34,9 @@ public class SingleItemActivity extends AppCompatActivity {
     private ItemModel item;
     private ViewPageAdapterSingleItemActivity viewPagerAdapter;
 
-    private ViewModelSingleItem itemViewModel;
+    private ViewModelItem itemViewModel;
+
+    private List<ItemModel> wishlist = new ArrayList<>();
 
 
     @Override
@@ -38,16 +44,26 @@ public class SingleItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_item);
 
-        itemViewModel = new ViewModelProvider(this).get(ViewModelSingleItem.class);
 
         item = (ItemModel) getIntent().getSerializableExtra("itemData");
-
+        itemViewModel = new ViewModelProvider(this).get(ViewModelItem.class);
         itemViewModel.setItemData(item);
+        FloatingActionButton fab = findViewById(R.id.fab_wishlist);
+
+
+        wishlist = WishlistManager.getInstance(getApplicationContext()).getWishlist();
+        Log.d("WISHLIST", wishlist.toString());
+
+        if (isItemInWishlist(item.getItemId())) {
+            fab.setImageResource(R.drawable.cart_off_white);
+        } else {
+            fab.setImageResource(R.drawable.cart_plus_white);
+        }
+
 
         tabLayout = findViewById(R.id.tabLayout);
         viewPager2 = findViewById(R.id.viewPager2);
         ImageButton backButton = findViewById(R.id.backButton);
-        FloatingActionButton fab = findViewById(R.id.fab_wishlist);
 
 
         viewPagerAdapter = new ViewPageAdapterSingleItemActivity(this);
@@ -91,28 +107,34 @@ public class SingleItemActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                boolean isItemInWishlist = isItemInWishlist(item.getItemId());
                 ItemModel wishlistItem = new ItemModel(
                         item.getItemId(), item.getImage(), item.getTitle(), item.getPrice(), item.getShipping()
                 );
 
-                addItemToWishlist(wishlistItem);
-                Toast.makeText(getApplicationContext(), "Item added to wishlist", Toast.LENGTH_SHORT).show();
+                if (!isItemInWishlist) {
+                    addItemToWishlist(wishlistItem);
+                    fab.setImageResource(R.drawable.cart_off_white);
+                    Toast.makeText(getApplicationContext(), "Item added to wishlist", Toast.LENGTH_SHORT).show();
 
-
-//                if (!WishlistManager.getInstance(getApplicationContext()).isItemInWishlist(item.getItemId())) {
-//                    addItemToWishlist(wishlistItem);
-//                    fab.setImageResource(R.drawable.cart_off_white);
-//                    Toast.makeText(getApplicationContext(), "Item added to wishlist", Toast.LENGTH_SHORT).show();
-//
-//                } else {
-//                    removeItemFromWishlist(item.getItemId());
-//                    fab.setImageResource(R.drawable.cart_plus_white);
-//                    Toast.makeText(getApplicationContext(), "Item removed from wishlist", Toast.LENGTH_SHORT).show();
-//                }
+                } else {
+                    removeItemFromWishlist(item.getItemId());
+                    fab.setImageResource(R.drawable.cart_plus_white);
+                    Toast.makeText(getApplicationContext(), "Item removed from wishlist", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
 
+    }
+
+    private boolean isItemInWishlist(String itemId) {
+        for (ItemModel item : wishlist) {
+            if (item.getItemId().equals(itemId)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void fetchItemDetails(String itemId) {
@@ -147,7 +169,7 @@ public class SingleItemActivity extends AppCompatActivity {
         WishlistManager.getInstance(getApplicationContext()).addItemToWishlist(item, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Log.d("WISHLIST_API", "Response: " + response.toString());
+                Log.d("WISHLIST_API.Added", "Response: " + response.toString());
             }
         }, new Response.ErrorListener() {
             @Override
@@ -161,7 +183,7 @@ public class SingleItemActivity extends AppCompatActivity {
         WishlistManager.getInstance(getApplicationContext()).removeItemFromWishlist(itemId, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Log.d("WISHLIST_API", "Response: " + response.toString());
+                Log.d("WISHLIST_API.Remove", "Response: " + response.toString());
             }
         }, new Response.ErrorListener() {
             @Override

@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.example.ebaysearch.R;
 import com.example.ebaysearch.ItemModel;
-import com.example.ebaysearch.ViewModelSingleItem;
+import com.example.ebaysearch.ViewModelItem;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -65,7 +65,7 @@ public class ProductFragment extends Fragment {
         textViewBrand = view.findViewById(R.id.textViewBrand);
 
 
-        ViewModelSingleItem itemViewModel = new ViewModelProvider(requireActivity()).get(ViewModelSingleItem.class);
+        ViewModelItem itemViewModel = new ViewModelProvider(requireActivity()).get(ViewModelItem.class);
         itemViewModel.getItemData().observe(getViewLifecycleOwner(), item -> {
             // Use the item data here
             this.item = item;

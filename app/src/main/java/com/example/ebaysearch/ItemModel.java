@@ -97,19 +97,19 @@ public class ItemModel implements Serializable {
     }
 
 
-//    @Override
-//    public String toString() {
-//        return "SearchItemModel{" +
-//                "itemId='" + itemId + '\'' +
-//                ", title='" + title + '\'' +
-//                ", price='" + price + '\'' +
-//                ", shipping='" + shipping + '\'' +
-//                ", image='" + image + '\'' +
-//                ", link='" + link + '\'' +
-//                ", daysLeft='" + daysLeft + '\'' +
-//                ", zip='" + zip + '\'' +
-//                ", sellerInfo='" + sellerInfo + '\'' +
-//                ", shippingInfo='" + shippingInfo + '\'' +
-//                '}';
-//    }
+    @Override
+    public String toString() {
+        return "SearchItemModel{" +
+                "itemId='" + itemId + '\'' +
+                ", title='" + title + '\'' +
+                ", price='" + price + '\'' +
+                ", shipping='" + shipping + '\'' +
+                ", image='" + image + '\'' +
+                ", link='" + link + '\'' +
+                ", daysLeft='" + daysLeft + '\'' +
+                ", zip='" + zip + '\'' +
+                ", sellerInfo='" + sellerInfo + '\'' +
+                ", shippingInfo='" + shippingInfo + '\'' +
+                '}';
+    }
 }

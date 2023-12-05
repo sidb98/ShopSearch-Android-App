@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -31,6 +32,8 @@ public class SingleItemActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager2 viewPager2;
 
+    private TextView titleTextView;
+
     private ItemModel item;
     private ViewPageAdapterSingleItemActivity viewPagerAdapter;
 
@@ -50,14 +53,17 @@ public class SingleItemActivity extends AppCompatActivity {
         itemViewModel.setItemData(item);
         FloatingActionButton fab = findViewById(R.id.fab_wishlist);
 
+        titleTextView = findViewById(R.id.product_search_title);
+        titleTextView.setText(item.getTitle());
+
 
         wishlist = WishlistManager.getInstance(getApplicationContext()).getWishlist();
         Log.d("WISHLIST", wishlist.toString());
 
         if (isItemInWishlist(item.getItemId())) {
-            fab.setImageResource(R.drawable.cart_off_white);
+            fab.setImageResource(R.drawable.cart_remove);
         } else {
-            fab.setImageResource(R.drawable.cart_plus_white);
+            fab.setImageResource(R.drawable.cart_plus);
         }
 
 
@@ -114,12 +120,12 @@ public class SingleItemActivity extends AppCompatActivity {
 
                 if (!isItemInWishlist) {
                     addItemToWishlist(wishlistItem);
-                    fab.setImageResource(R.drawable.cart_off_white);
+                    fab.setImageResource(R.drawable.cart_remove);
                     Toast.makeText(getApplicationContext(), "Item added to wishlist", Toast.LENGTH_SHORT).show();
 
                 } else {
                     removeItemFromWishlist(item.getItemId());
-                    fab.setImageResource(R.drawable.cart_plus_white);
+                    fab.setImageResource(R.drawable.cart_plus);
                     Toast.makeText(getApplicationContext(), "Item removed from wishlist", Toast.LENGTH_SHORT).show();
                 }
 

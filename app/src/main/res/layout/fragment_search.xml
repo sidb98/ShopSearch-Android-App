@@ -1,200 +1,237 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".fragments_main_activity.SearchFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Keyword" />
-
-    <EditText
-        android:id="@+id/editTextText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Enter Keyword"
-        android:inputType="text" />
-
-    <TextView
-        android:id="@+id/keywordErrorTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Please enter mandatory field"
-        android:textColor="@color/red"
-        android:visibility="gone" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Category" />
-
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:entries="@array/category_array" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Condition" />
-
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <CheckBox
-            android:id="@+id/newCheckBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="New" />
-
-        <CheckBox
-            android:id="@+id/usedCheckBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Used" />
-
-        <CheckBox
-            android:id="@+id/unspecifiedCheckBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Unspecified" />
-
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Shipping Options"></TextView>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <CheckBox
-            android:id="@+id/localPickupCheckBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Local Pickup" />
-
-        <CheckBox
-            android:id="@+id/freeShippingCheckBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Free Shipping" />
-    </LinearLayout>
-
-    <LinearLayout
+        android:id="@+id/mainContentLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Enable Nearby Search" />
-
-        <CheckBox
-            android:id="@+id/nearbySearchCheckBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayoutDistance"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Distance" />
+            android:text="Keyword" />
 
         <EditText
-            android:id="@+id/editTextMiles"
+            android:id="@+id/editTextText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Miles from" />
+            android:hint="Enter Keyword"
+            android:inputType="text" />
+
+        <TextView
+            android:id="@+id/keywordErrorTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Please enter mandatory field"
+            android:textColor="@color/red"
+            android:visibility="gone" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="From" />
+            android:text="Category" />
 
-        <RadioGroup
-            android:id="@+id/radioGroupLocation"
+        <Spinner
+            android:id="@+id/spinner"
             android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:entries="@array/category_array" />
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:text="Condition" />
 
-            <RadioButton
-                android:id="@+id/currentLocationRadioButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:text="Current Location" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-            <LinearLayout
+            <CheckBox
+                android:id="@+id/newCheckBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:text="New" />
+
+            <CheckBox
+                android:id="@+id/usedCheckBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Used" />
+
+            <CheckBox
+                android:id="@+id/unspecifiedCheckBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Unspecified" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Shipping Options"></TextView>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/localPickupCheckBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Local Pickup" />
+
+            <CheckBox
+                android:id="@+id/freeShippingCheckBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Free Shipping" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Enable Nearby Search" />
+
+            <CheckBox
+                android:id="@+id/nearbySearchCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayoutDistance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/textViewDistance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Distance" />
+
+            <EditText
+                android:id="@+id/editTextMiles"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewDistance"
+                android:ems="10"
+                android:hint="Miles from" />
+
+            <TextView
+                android:id="@+id/textViewFrom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/editTextMiles"
+                android:text="From" />
+
+            <RadioGroup
+                android:id="@+id/radioGroupLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewFrom"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/currentLocationRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="Current Location" />
 
                 <RadioButton
                     android:id="@+id/zipcodeRadioButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp" />
+                    android:layout_marginLeft="20dp"
+                    android:text="" />
+            </RadioGroup>
 
-                <EditText
-                    android:id="@+id/editTextZipcode"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="15dp"
-                    android:ems="10"
-                    android:hint="Zipcode" />
-            </LinearLayout>
+            <AutoCompleteTextView
+                android:id="@+id/editTextZipcode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/radioGroupLocation"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="15dp"
+                android:ems="10"
+                android:hint="Zipcode"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
             <TextView
                 android:id="@+id/zipcodeErrorTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/editTextZipcode"
+                android:layout_marginLeft="15dp"
                 android:text="Please enter mandatory field"
                 android:textColor="@color/red"
                 android:visibility="gone" />
 
-        </RadioGroup>
-    </LinearLayout>
+        </RelativeLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/searchButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/orange"
+                android:text="Search" />
+
+            <Button
+                android:id="@+id/clearButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:backgroundTint="@color/orange"
+                android:text="Clear"></Button>
+        </LinearLayout>
+    </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/progressBarLayout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:gravity="center">
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/searchButton"
+        <ProgressBar
+            android:id="@+id/loading_spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Search" />
+            android:indeterminateTint="@color/purple_500"
+            android:layout_gravity="center" />
 
-        <Button
-            android:id="@+id/clearButton"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="Clear"></Button>
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:text="Searching Products..."
+            android:textColor="@color/purple_500"
+            android:textSize="18dp"
+            android:textStyle="bold" />
     </LinearLayout>
 
-
-</LinearLayout>
+</RelativeLayout>

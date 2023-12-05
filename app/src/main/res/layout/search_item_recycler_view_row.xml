@@ -12,6 +12,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:orientation="vertical"
         android:padding="8dp">
 
@@ -19,6 +20,7 @@
             android:id="@+id/item_image"
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:scaleType="fitCenter"
             android:src="@drawable/ic_launcher_background" />
 
         <TextView
@@ -26,49 +28,56 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/item_image"
-            android:text="PRODUCT TITLE"
+            android:layout_marginBottom="15dp"
+            android:ellipsize="end"
             android:gravity="center"
+            android:maxLines="2"
+            android:text="PRODUCT TITLE"
             android:textAppearance="?attr/textAppearanceListItem"
             android:textStyle="bold" />
 
         <ImageView
+            android:id="@+id/wishlist_cart"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_below="@id/item_title"
             android:layout_alignParentRight="true"
-            android:src="@drawable/cart_plus"/>
+            android:src="@drawable/cart_plus" />
 
         <TextView
+            android:id="@+id/item_zipcode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/item_zipcode"
             android:layout_below="@id/item_title"
             android:text="Zip: *****"
-            android:textAppearance="?attr/textAppearanceListItem" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/item_shipping"
-            android:layout_below="@id/item_zipcode"
-            android:text="Free"
-            android:textAppearance="?attr/textAppearanceListItem" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/item_condition"
-            android:layout_below="@id/item_shipping"
-            android:text="New"
-            android:textAppearance="?attr/textAppearanceListItem" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
         <TextView
+            android:id="@+id/item_shipping"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/item_zipcode"
+            android:text="Free"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+        <TextView
+            android:id="@+id/item_condition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/item_shipping"
+            android:text="New"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+        <TextView
             android:id="@+id/item_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignBottom="@id/item_condition"
             android:layout_alignParentEnd="true"
             android:text="$"
-            android:textColor="@color/purple_500"
-            android:textAppearance="?attr/textAppearanceListItem" />
+            android:textStyle="bold"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="@color/purple_500" />
 
     </RelativeLayout>
 

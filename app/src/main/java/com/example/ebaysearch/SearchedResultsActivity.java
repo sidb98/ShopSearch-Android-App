@@ -81,4 +81,9 @@ public class SearchedResultsActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
+    }
 }

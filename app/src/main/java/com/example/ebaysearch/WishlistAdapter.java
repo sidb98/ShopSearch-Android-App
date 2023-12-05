@@ -1,26 +1,34 @@
 package com.example.ebaysearch;
 
-import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.ebaysearch.fragments_main_activity.OnWishlistChangeListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHolder>{
+public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHolder> {
 
     private List<ItemModel> WishlistItem;
+    private TextView itemCount, totalPrice;
+    private OnWishlistChangeListener wishlistChangeListener = null;
 
     public WishlistAdapter(List<ItemModel> item) {
         this.WishlistItem = item;
+    }
+
+    public void setOnWishlistChangeListener(OnWishlistChangeListener listener) {
+        this.wishlistChangeListener = listener;
     }
 
     @NonNull
@@ -44,6 +52,32 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
                 .error(R.drawable.ic_launcher_background) // optional, shown if there's an error loading the image
                 .into(holder.itemImage);
 
+        holder.wishlist_cart.setImageResource(R.drawable.cart_remove);
+
+        holder.wishlist_cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int currPosition = holder.getAdapterPosition();
+                WishlistItem.remove(currPosition);
+                notifyItemRemoved(currPosition);
+                notifyItemRangeChanged(currPosition, WishlistItem.size());
+
+                WishlistManager.getInstance(v.getContext()).removeItemFromWishlist(item.getItemId(), null, null);
+
+                String title = item.getTitle();
+                if (title.length() > 10) {
+                    title = title.substring(0, 10) + "...";
+                }
+                Toast.makeText(v.getContext(), title + " removed from wishlist", Toast.LENGTH_SHORT).show();
+
+                if (wishlistChangeListener != null) {
+                    wishlistChangeListener.onWishlistChanged();
+                }
+
+
+            }
+        });
+
     }
 
     @Override
@@ -53,7 +87,7 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView itemTitle, itemPrice, itemZipcode, itemShipping;
-        public ImageView itemImage;
+        public ImageView itemImage, wishlist_cart;
         // Add other views
 
         public ViewHolder(View itemView) {
@@ -63,6 +97,7 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
             itemZipcode = itemView.findViewById(R.id.item_zipcode);
             itemShipping = itemView.findViewById(R.id.item_shipping);
             itemImage = itemView.findViewById(R.id.item_image);
+            wishlist_cart = itemView.findViewById(R.id.wishlist_cart);
         }
     }
 }

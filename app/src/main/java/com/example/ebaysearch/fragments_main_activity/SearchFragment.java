@@ -7,23 +7,31 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ebaysearch.R;
 import com.example.ebaysearch.ItemModel;
@@ -33,33 +41,31 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
 public class SearchFragment extends Fragment {
 
-    private EditText keywordEditText;
-    private TextView keywordErrorTextView;
+    private EditText keywordEditText, milesEditText;
+    private TextView keywordErrorTextView, zipcodeErrorTextView;
     private Spinner categorySpinner;
-    private CheckBox newCheckBox;
-    private CheckBox usedCheckBox;
-    private CheckBox unspecifiedCheckBox;
-    private CheckBox localPickupCheckBox;
-    private CheckBox freeShippingCheckBox;
-    private CheckBox nearbySearchCheckBox;
-    private LinearLayout linearLayoutDistance;
-    private EditText milesEditText;
-    private RadioButton currentLocationRadioButton;
-    private RadioButton zipCodeRadioButton;
-    private EditText zipCodeEditText;
-    private TextView zipcodeErrorTextView;
-    private ItemModel singleItem;
+    private CheckBox newCheckBox, usedCheckBox, unspecifiedCheckBox, localPickupCheckBox, freeShippingCheckBox, nearbySearchCheckBox ;
+    private RelativeLayout relativeLayoutDistance;
+    private RadioButton currentLocationRadioButton, zipCodeRadioButton;
+    private AutoCompleteTextView zipCodeAutoCompleteText;
 
+    private LinearLayout mainContentLayout, progressBarLayout;
+
+    private ArrayList<String> zipCodesList = new ArrayList<>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_search, container, false);
+
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
 
         // Find views by their IDs
         keywordEditText = view.findViewById(R.id.editTextText);
@@ -71,12 +77,15 @@ public class SearchFragment extends Fragment {
         localPickupCheckBox = view.findViewById(R.id.localPickupCheckBox);
         freeShippingCheckBox = view.findViewById(R.id.freeShippingCheckBox);
         nearbySearchCheckBox = view.findViewById(R.id.nearbySearchCheckBox);
-        linearLayoutDistance = view.findViewById(R.id.linearLayoutDistance);
+        relativeLayoutDistance = view.findViewById(R.id.relativeLayoutDistance);
         milesEditText = view.findViewById(R.id.editTextMiles);
         currentLocationRadioButton = view.findViewById(R.id.currentLocationRadioButton);
         zipCodeRadioButton = view.findViewById(R.id.zipcodeRadioButton);
-        zipCodeEditText = view.findViewById(R.id.editTextZipcode);
+        zipCodeAutoCompleteText = view.findViewById(R.id.editTextZipcode);
         zipcodeErrorTextView = view.findViewById(R.id.zipcodeErrorTextView);
+
+        mainContentLayout = view.findViewById(R.id.mainContentLayout);
+        progressBarLayout = view.findViewById(R.id.progressBarLayout);
 
 
         Button searchButton = view.findViewById(R.id.searchButton);
@@ -84,11 +93,32 @@ public class SearchFragment extends Fragment {
 
         nearbySearchCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
-                linearLayoutDistance.setVisibility(View.VISIBLE);
+                relativeLayoutDistance.setVisibility(View.VISIBLE);
             } else {
-                linearLayoutDistance.setVisibility(View.GONE);
+                relativeLayoutDistance.setVisibility(View.GONE);
             }
         });
+
+        zipCodeAutoCompleteText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                fetchZipcodes(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                getContext(),
+                android.R.layout.simple_dropdown_item_1line,
+                zipCodesList);
 
 
         // Set listeners for buttons if needed
@@ -112,6 +142,9 @@ public class SearchFragment extends Fragment {
     }
 
     private void performSearch() {
+        progressBarLayout.setVisibility(View.VISIBLE);
+        mainContentLayout.setVisibility(View.GONE);
+
         // Retrieve values from views and perform search logic
         String keyword = keywordEditText.getText().toString();
         String category = categorySpinner.getSelectedItem().toString();
@@ -124,12 +157,13 @@ public class SearchFragment extends Fragment {
         String miles = milesEditText.getText().toString();
         boolean isCurrentLocation = currentLocationRadioButton.isChecked();
         boolean isZipcode = zipCodeRadioButton.isChecked();
-        String zipcode = zipCodeEditText.getText().toString();
+        String zipcode = zipCodeAutoCompleteText.getText().toString();
 
 
 
         if (keyword.isEmpty()) {
             Log.d("FORM_CHECK.KEYWORD", "performSearch: keyword is empty");
+            Toast.makeText(getContext(), "Please fix all fields with errors", Toast.LENGTH_SHORT).show();
             keywordErrorTextView.setVisibility(View.VISIBLE);
             if (isNearbySearch && isZipcode && zipcode.isEmpty()) {
                 zipcodeErrorTextView.setVisibility(View.VISIBLE);
@@ -141,6 +175,7 @@ public class SearchFragment extends Fragment {
 
         miles = miles.isEmpty() ? "10" : miles;
         zipcode = zipcode.isEmpty() ? "90007" : zipcode;
+        Log.d("SEARCH_API.FORM_CHECK.Zipcode", "performSearch: zipcode is " + zipcode);
 
         Log.d("FORM_CHECK", "FORM CHECK PASSED ");
 
@@ -196,9 +231,12 @@ public class SearchFragment extends Fragment {
                                 Log.d("SEARCH_API.Response", ack + " with " + items.length() + " items");
                                 Log.d("SEARCH_API.Response", items.toString());
 
+
                                 Intent intent = new Intent(getContext(), SearchedResultsActivity.class);
                                 intent.putExtra("items", items.toString());
                                 startActivity(intent);
+
+
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -230,8 +268,58 @@ public class SearchFragment extends Fragment {
         milesEditText.setText("");
         currentLocationRadioButton.setChecked(false);
         zipCodeRadioButton.setChecked(false);
-        zipCodeEditText.setText("");
+        zipCodeAutoCompleteText.setText("");
         zipcodeErrorTextView.setVisibility(View.GONE);
 
     }
+
+    private void fetchZipcodes(String inputValue) {
+        String url = "https://ebay-backend-404323.wl.r.appspot.com/api/geolocation?startsWith=" + inputValue;
+
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Process the response to extract zip codes
+                        // Update your EditText or other UI elements here
+                        try {
+                            JSONArray jsonArray = new JSONArray(response);
+                            ArrayList<String> zipCodesList = new ArrayList<>();
+                            zipCodesList.clear();
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                zipCodesList.add(jsonArray.getString(i));
+                            }
+                            Log.d("ZIPCODES", zipCodesList.toString());
+                            ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                                    getContext(),
+                                    android.R.layout.simple_dropdown_item_1line,
+                                    zipCodesList);
+                            zipCodeAutoCompleteText.setAdapter(adapter);
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // Handle error
+                Log.e("Volley", "Error on fetching zip codes: " + error.getMessage());
+            }
+        });
+
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        progressBarLayout.setVisibility(View.GONE);
+        mainContentLayout.setVisibility(View.VISIBLE);
+    }
+
 }

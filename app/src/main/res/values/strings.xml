@@ -16,6 +16,17 @@
         <item>Music</item>
         <item>Video Games &amp; Consoles</item>
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="sort_category">
+        <item>Default</item>
+        <item>Name</item>
+        <item>Price</item>
+        <item>Days</item>
+    </string-array>
+
+    <string-array name="sort_order">
+        <item>Ascending</item>
+        <item>Descending</item>
+    </string-array>
+
 </resources>

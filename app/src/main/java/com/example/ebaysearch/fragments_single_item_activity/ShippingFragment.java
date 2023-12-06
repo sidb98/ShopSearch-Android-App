@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.ebaysearch.R;
@@ -37,6 +38,8 @@ public class ShippingFragment extends Fragment {
             textViewHandlingTime, textViewReturnPolicy, textViewStoreName;
     private ImageView imageFeedbackStar;
 
+    private ProgressBar progressBar;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,7 +48,8 @@ public class ShippingFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_shipping, container, false);
 
         textViewFeedbackScore = view.findViewById(R.id.textViewFeedbackScore);
-        textViewPopularity = view.findViewById(R.id.textViewPopularity);
+        progressBar = view.findViewById(R.id.progressBar);
+        textViewPopularity = view.findViewById(R.id.progressBarTextView);
         textViewShippingCost = view.findViewById(R.id.textViewShippingCost);
         textViewGlobalShipping = view.findViewById(R.id.textViewGlobalShipping);
         textViewHandlingTime = view.findViewById(R.id.textViewHandlingTime);
@@ -71,6 +75,13 @@ public class ShippingFragment extends Fragment {
                 textViewFeedbackScore.setText(sellerInfo.getString("feedbackScore"));
 
                 Log.d("ShippingFragment", "onCreateView: " + sellerInfo.getString("feedbackRating"));
+
+                if (Float.parseFloat(sellerInfo.getString("feedbackScore")) <= 10000) {
+                    imageFeedbackStar.setImageResource(R.drawable.star_circle_outline);
+                } else {
+                    imageFeedbackStar.setImageResource(R.drawable.star_circle);
+                }
+
                 int tint;
                 if (sellerInfo.getString("feedbackRating").equals("Yellow")) {
                     tint = ContextCompat.getColor(getContext(), R.color.yellow);
@@ -91,6 +102,9 @@ public class ShippingFragment extends Fragment {
                 imageFeedbackStar.setColorFilter(tint, PorterDuff.Mode.SRC_IN);
 
                 textViewPopularity.setText(sellerInfo.getString("popularity"));
+                float popularity = Float.parseFloat(sellerInfo.getString("popularity"));
+                progressBar.setProgress(Math.round(popularity));
+
                 textViewShippingCost.setText(shippingInfo.getString("shippingCost"));
                 textViewGlobalShipping.setText(shippingInfo.getString("shippingLocation"));
                 textViewHandlingTime.setText(shippingInfo.getString("handlingTime"));

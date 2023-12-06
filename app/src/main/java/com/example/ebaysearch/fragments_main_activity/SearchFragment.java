@@ -142,8 +142,6 @@ public class SearchFragment extends Fragment {
     }
 
     private void performSearch() {
-        progressBarLayout.setVisibility(View.VISIBLE);
-        mainContentLayout.setVisibility(View.GONE);
 
         // Retrieve values from views and perform search logic
         String keyword = keywordEditText.getText().toString();
@@ -214,6 +212,10 @@ public class SearchFragment extends Fragment {
 
         String url = builder.build().toString();
         Log.d("SEARCH_API.URL", url);
+
+        progressBarLayout.setVisibility(View.VISIBLE);
+        mainContentLayout.setVisibility(View.GONE);
+
 
         Context context = getContext();
         if (context != null) {

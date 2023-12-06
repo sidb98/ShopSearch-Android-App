@@ -40,14 +40,25 @@
         android:layout_height="match_parent"
         android:layout_below="@id/linearLayout" />
 
-    <TextView
+
+    <androidx.cardview.widget.CardView
         android:id="@+id/noResultsFound"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="No Results Found"
+        android:padding="50dp"
         android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:layout_marginHorizontal="30dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:paddingVertical="5dp"
         android:textStyle="bold"
-        android:textSize="20sp"
-        android:visibility="gone"/>
+        android:textColor="@color/black"
+        android:text="No Results Found" />
+    </androidx.cardview.widget.CardView>
+
 
 </RelativeLayout>

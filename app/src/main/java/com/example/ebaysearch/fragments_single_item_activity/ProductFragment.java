@@ -43,7 +43,7 @@ public class ProductFragment extends Fragment {
 
     TextView textViewBrand;
 
-    LinearLayout linearLayoutparent;
+    LinearLayout linearLayoutparent, progressBarLayout;
 
     LinearLayout galleryLinearLayout;
     LayoutInflater mInflater;
@@ -57,6 +57,7 @@ public class ProductFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_product, container, false);
         linearLayoutparent = view.findViewById(R.id.linearLayoutParent);
         galleryLinearLayout = view.findViewById(R.id.id_gallery);
+        progressBarLayout = view.findViewById(R.id.progressBarLayout);
 
 
         textViewTitle = view.findViewById(R.id.textViewTitle);
@@ -130,6 +131,10 @@ public class ProductFragment extends Fragment {
             ImageView imageView = view.findViewById(R.id.id_index_gallery_item_image);
             Picasso.get().load(imageUrls.get(i)).into(imageView);
             galleryLinearLayout.addView(view);
+
+            linearLayoutparent.setVisibility(View.VISIBLE);
+            progressBarLayout.setVisibility(View.GONE);
+
         }
     }
 

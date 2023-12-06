@@ -126,16 +126,22 @@ public class SingleItemActivity extends AppCompatActivity {
             ItemModel wishlistItem = new ItemModel(
                     item.getItemId(), item.getImage(), item.getTitle(), item.getPrice(), item.getShipping()
             );
+            String title = item.getTitle();
+            if (title.length() > 10) {
+                title = title.substring(0, 10) + "...";
+            }
 
             if (!isItemInWishlist) {
                 addItemToWishlist(wishlistItem);
                 fab.setImageResource(R.drawable.cart_remove);
-                Toast.makeText(getApplicationContext(), "Item added to wishlist", Toast.LENGTH_SHORT).show();
+
+
+                Toast.makeText(getApplicationContext(), title+" added to wishlist", Toast.LENGTH_SHORT).show();
 
             } else {
                 removeItemFromWishlist(item.getItemId());
                 fab.setImageResource(R.drawable.cart_plus);
-                Toast.makeText(getApplicationContext(), "Item removed from wishlist", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), title+" removed from wishlist", Toast.LENGTH_SHORT).show();
             }
 
         });

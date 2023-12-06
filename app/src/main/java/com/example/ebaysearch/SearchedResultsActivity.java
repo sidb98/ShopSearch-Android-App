@@ -1,6 +1,7 @@
 package com.example.ebaysearch;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -9,7 +10,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,7 +23,7 @@ public class SearchedResultsActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private SearchItemAdapter adapter;
 
-    private TextView noResultsTextView;
+    private CardView noResultsCardView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,13 +34,13 @@ public class SearchedResultsActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
-        noResultsTextView = findViewById(R.id.noResultsFound);
+        noResultsCardView = findViewById(R.id.noResultsFound);
 
         String searchedResultsString = getIntent().getStringExtra("items");
         Log.d("SEARCH_API.INTENT", searchedResultsString);
 
         if (searchedResultsString.equals("[]")) {
-            noResultsTextView.setVisibility(View.VISIBLE);
+            noResultsCardView.setVisibility(View.VISIBLE);
         }
 
 

@@ -127,9 +127,11 @@
                     android:textSize="15sp" />
 
                 <ImageView
+                    android:id="@+id/imageViewFeedbackStar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="82dp"
+                    android:tint="@color/purple_500"
                     android:src="@drawable/star_circle" />
             </LinearLayout>
 

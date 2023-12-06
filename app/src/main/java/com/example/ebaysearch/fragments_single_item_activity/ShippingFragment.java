@@ -1,7 +1,9 @@
 package com.example.ebaysearch.fragments_single_item_activity;
 
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -13,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ebaysearch.R;
@@ -30,8 +33,10 @@ public class ShippingFragment extends Fragment {
     private JSONObject singleItemData;
     String returnPolicy;
 
-    TextView textViewFeedbackScore, textViewPopularity, textViewShippingCost, textViewGlobalShipping,
+    private TextView textViewFeedbackScore, textViewPopularity, textViewShippingCost, textViewGlobalShipping,
             textViewHandlingTime, textViewReturnPolicy, textViewStoreName;
+    private ImageView imageFeedbackStar;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,6 +51,7 @@ public class ShippingFragment extends Fragment {
         textViewHandlingTime = view.findViewById(R.id.textViewHandlingTime);
         textViewReturnPolicy = view.findViewById(R.id.textViewReturnPolicy);
         textViewStoreName = view.findViewById(R.id.textViewStoreName);
+        imageFeedbackStar = view.findViewById(R.id.imageViewFeedbackStar);
 
         ViewModelItem itemViewModel = new ViewModelProvider(requireActivity()).get(ViewModelItem.class);
         itemViewModel.getItemData().observe(getViewLifecycleOwner(), item -> {
@@ -63,6 +69,27 @@ public class ShippingFragment extends Fragment {
                 String storeName = sellerInfo.getString("storeName");
 
                 textViewFeedbackScore.setText(sellerInfo.getString("feedbackScore"));
+
+                Log.d("ShippingFragment", "onCreateView: " + sellerInfo.getString("feedbackRating"));
+                int tint;
+                if (sellerInfo.getString("feedbackRating").equals("Yellow")) {
+                    tint = ContextCompat.getColor(getContext(), R.color.yellow);
+                } else if (sellerInfo.getString("feedbackRating").equals("Blue")) {
+                    tint = ContextCompat.getColor(getContext(), R.color.black);
+                } else if (sellerInfo.getString("feedbackRating").equals("Turquoise")) {
+                    tint = ContextCompat.getColor(getContext(), R.color.yellow);
+                } else if (sellerInfo.getString("feedbackRating").equals("Purple")) {
+                    tint = ContextCompat.getColor(getContext(), R.color.purple);
+                } else if (sellerInfo.getString("feedbackRating").equals("Red")) {
+                    tint = ContextCompat.getColor(getContext(), R.color.red);
+                } else if (sellerInfo.getString("feedbackRating").equals("Green")) {
+                    tint = ContextCompat.getColor(getContext(), R.color.green);
+                } else {
+                    tint = ContextCompat.getColor(getContext(), R.color.black);
+                }
+
+                imageFeedbackStar.setColorFilter(tint, PorterDuff.Mode.SRC_IN);
+
                 textViewPopularity.setText(sellerInfo.getString("popularity"));
                 textViewShippingCost.setText(shippingInfo.getString("shippingCost"));
                 textViewGlobalShipping.setText(shippingInfo.getString("shippingLocation"));

@@ -1,6 +1,6 @@
 package com.example.ebaysearch;
 
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.ebaysearch.fragments_main_activity.OnWishlistChangeListener;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHolder> {
 
     private List<ItemModel> WishlistItem;
-    private TextView itemCount, totalPrice;
     private OnWishlistChangeListener wishlistChangeListener = null;
 
     public WishlistAdapter(List<ItemModel> item) {

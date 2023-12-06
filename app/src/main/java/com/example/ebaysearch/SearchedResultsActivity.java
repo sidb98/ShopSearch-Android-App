@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,6 +23,8 @@ public class SearchedResultsActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private SearchItemAdapter adapter;
 
+    private TextView noResultsTextView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +34,17 @@ public class SearchedResultsActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
+        noResultsTextView = findViewById(R.id.noResultsFound);
+
         String searchedResultsString = getIntent().getStringExtra("items");
+        Log.d("SEARCH_API.INTENT", searchedResultsString);
+
+        if (searchedResultsString.equals("[]")) {
+            noResultsTextView.setVisibility(View.VISIBLE);
+        }
+
+
+
         ArrayList<ItemModel> itemList = new ArrayList<>();
         try {
             searchItems = new JSONArray(searchedResultsString);

@@ -1,10 +1,11 @@
 package com.example.ebaysearch;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -33,6 +34,8 @@ public class SingleItemActivity extends AppCompatActivity {
     private ViewPager2 viewPager2;
 
     private TextView titleTextView;
+
+    private ImageButton facebookButton;
 
     private ItemModel item;
     private ViewPageAdapterSingleItemActivity viewPagerAdapter;
@@ -70,6 +73,17 @@ public class SingleItemActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tabLayout);
         viewPager2 = findViewById(R.id.viewPager2);
         ImageButton backButton = findViewById(R.id.backButton);
+        facebookButton = findViewById(R.id.facebookButton);
+
+        facebookButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String facebookShareURL = "https://www.facebook.com/sharer/sharer.php?u=" + item.getLink();
+                Log.d("FACEBOOK", facebookShareURL);
+                Intent shareIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(facebookShareURL));
+                SingleItemActivity.this.startActivity(shareIntent);
+            }
+        });
 
 
         viewPagerAdapter = new ViewPageAdapterSingleItemActivity(this);
@@ -102,34 +116,28 @@ public class SingleItemActivity extends AppCompatActivity {
 
         fetchItemDetails(item.getItemId());
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish(); // Close this activity and return to the previous one
-            }
+        backButton.setOnClickListener(v -> {
+            finish(); // Close this activity and return to the previous one
         });
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        fab.setOnClickListener(view -> {
 
-                boolean isItemInWishlist = isItemInWishlist(item.getItemId());
-                ItemModel wishlistItem = new ItemModel(
-                        item.getItemId(), item.getImage(), item.getTitle(), item.getPrice(), item.getShipping()
-                );
+            boolean isItemInWishlist = isItemInWishlist(item.getItemId());
+            ItemModel wishlistItem = new ItemModel(
+                    item.getItemId(), item.getImage(), item.getTitle(), item.getPrice(), item.getShipping()
+            );
 
-                if (!isItemInWishlist) {
-                    addItemToWishlist(wishlistItem);
-                    fab.setImageResource(R.drawable.cart_remove);
-                    Toast.makeText(getApplicationContext(), "Item added to wishlist", Toast.LENGTH_SHORT).show();
+            if (!isItemInWishlist) {
+                addItemToWishlist(wishlistItem);
+                fab.setImageResource(R.drawable.cart_remove);
+                Toast.makeText(getApplicationContext(), "Item added to wishlist", Toast.LENGTH_SHORT).show();
 
-                } else {
-                    removeItemFromWishlist(item.getItemId());
-                    fab.setImageResource(R.drawable.cart_plus);
-                    Toast.makeText(getApplicationContext(), "Item removed from wishlist", Toast.LENGTH_SHORT).show();
-                }
-
+            } else {
+                removeItemFromWishlist(item.getItemId());
+                fab.setImageResource(R.drawable.cart_plus);
+                Toast.makeText(getApplicationContext(), "Item removed from wishlist", Toast.LENGTH_SHORT).show();
             }
+
         });
 
     }
@@ -148,41 +156,23 @@ public class SingleItemActivity extends AppCompatActivity {
 
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            Log.d("SINGLE_ITEM_API", "Response: " + jsonObject.toString());
-                            itemViewModel.setSingleItemData(jsonObject);
-                        } catch (JSONException e) {
-                            Log.e("SINGLE_ITEM_API.ERROR", "JSON Parsing error: " + e.getMessage());
-                        }
+                response -> {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        Log.d("SINGLE_ITEM_API", "Response: " + jsonObject);
+                        itemViewModel.setSingleItemData(jsonObject);
+                    } catch (JSONException e) {
+                        Log.e("SINGLE_ITEM_API.ERROR", "JSON Parsing error: " + e.getMessage());
                     }
                 },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("SINGLE_ITEM.ERROR", "Error: " + error.getMessage());
-                    }
-                }
+                error -> Log.e("SINGLE_ITEM.ERROR", "Error: " + error.getMessage())
         );
 
         queue.add(stringRequest);
     }
 
     private void addItemToWishlist(ItemModel item) {
-        WishlistManager.getInstance(getApplicationContext()).addItemToWishlist(item, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                Log.d("WISHLIST_API.Added", "Response: " + response.toString());
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("WISHLIST_API.ERROR", "Error: " + error.getMessage());
-            }
-        });
+        WishlistManager.getInstance(getApplicationContext()).addItemToWishlist(item, response -> Log.d("WISHLIST_API.Added", "Response: " + response.toString()), error -> Log.e("WISHLIST_API.ERROR", "Error: " + error.getMessage()));
     }
 
     private void removeItemFromWishlist(String itemId) {

@@ -38,7 +38,7 @@ public class PhotosFragment extends Fragment {
     String title;
     ArrayList<String> imageUrls = new ArrayList<>();
 
-    LinearLayout photoLinearLayout;
+    LinearLayout photoLinearLayout, progressBarLayout;
     LayoutInflater mInflater;
 
     @Override
@@ -47,6 +47,8 @@ public class PhotosFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_photos, container, false);
         photoLinearLayout = view.findViewById(R.id.photoLinearLayout);
+        progressBarLayout = view.findViewById(R.id.progressBarLayout);
+
 
         ViewModelItem itemViewModel = new ViewModelProvider(requireActivity()).get(ViewModelItem.class);
         itemViewModel.getItemData().observe(getViewLifecycleOwner(), item -> {
@@ -70,6 +72,8 @@ public class PhotosFragment extends Fragment {
             Picasso.get().load(imageUrls.get(i)).into(imageView);
             photoLinearLayout.addView(view);
         }
+        progressBarLayout.setVisibility(View.GONE);
+        photoLinearLayout.setVisibility(View.VISIBLE);
     }
 
 

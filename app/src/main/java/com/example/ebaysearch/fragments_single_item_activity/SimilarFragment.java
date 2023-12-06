@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import com.android.volley.Request;
@@ -40,6 +41,8 @@ public class SimilarFragment extends Fragment {
     private ItemModel item;
 
     private List<ItemModel> similarItemsList, defaultSimilarItemsList;
+
+    private LinearLayout mainContentLayout, progressBarLayout;
     private Spinner sort_category, sort_order;
 
     @Override
@@ -48,6 +51,9 @@ public class SimilarFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_similar, container, false);
         ViewModelItem itemViewModel = new ViewModelProvider(requireActivity()).get(ViewModelItem.class);
+
+        mainContentLayout = view.findViewById(R.id.mainContentLayout);
+        progressBarLayout = view.findViewById(R.id.progressBarLayout);
 
         sort_category = view.findViewById(R.id.spinnerCategory);
         sort_order = view.findViewById(R.id.spinnerOrder);
@@ -135,6 +141,10 @@ public class SimilarFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         SimilarItemAdapter adapter = new SimilarItemAdapter(itemsList);
         recyclerView.setAdapter(adapter);
+
+        progressBarLayout.setVisibility(View.GONE);
+        mainContentLayout.setVisibility(View.VISIBLE);
+
     }
 
 

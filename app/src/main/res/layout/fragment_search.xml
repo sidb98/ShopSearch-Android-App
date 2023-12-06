@@ -170,6 +170,7 @@
                 android:layout_marginLeft="50dp"
                 android:layout_marginRight="15dp"
                 android:ems="10"
+                android:completionThreshold="1"
                 android:hint="Zipcode"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 

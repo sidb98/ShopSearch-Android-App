@@ -57,9 +57,10 @@ public class ShippingFragment extends Fragment {
         textViewStoreName = view.findViewById(R.id.textViewStoreName);
         imageFeedbackStar = view.findViewById(R.id.imageViewFeedbackStar);
 
+
+
         ViewModelItem itemViewModel = new ViewModelProvider(requireActivity()).get(ViewModelItem.class);
         itemViewModel.getItemData().observe(getViewLifecycleOwner(), item -> {
-            // Use the item data here
             this.item = item;
 
             Log.d("ShippingFragment", "onCreateView: " + item.getShippingInfo());
@@ -68,6 +69,8 @@ public class ShippingFragment extends Fragment {
             try {
                 JSONObject shippingInfo = new JSONObject(item.getShippingInfo());
                 JSONObject sellerInfo = new JSONObject(item.getSellerInfo());
+
+                Log.d("SellerInfo", "onCreateView: " + sellerInfo.toString());
 
                 String storeUrl = sellerInfo.getString("buyProductAt");
                 String storeName = sellerInfo.getString("storeName");
@@ -81,6 +84,7 @@ public class ShippingFragment extends Fragment {
                 } else {
                     imageFeedbackStar.setImageResource(R.drawable.star_circle);
                 }
+
 
                 int tint;
                 if (sellerInfo.getString("feedbackRating").equals("Yellow")) {
@@ -108,8 +112,6 @@ public class ShippingFragment extends Fragment {
                 textViewShippingCost.setText(shippingInfo.getString("shippingCost"));
                 textViewGlobalShipping.setText(shippingInfo.getString("shippingLocation"));
                 textViewHandlingTime.setText(shippingInfo.getString("handlingTime"));
-
-//                TODO: Find the store name in the string and make it clickable
 
                 SpannableString spannableString = new SpannableString(storeName);
                 spannableString.setSpan(new URLSpan(storeUrl), 0, storeName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);

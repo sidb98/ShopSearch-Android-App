@@ -14,6 +14,7 @@ public class ViewPageAdapterMainActivity extends FragmentStateAdapter {
         super(fragmentActivity);
     }
 
+
     @NonNull
     @Override
     public Fragment createFragment(int position) {

@@ -158,6 +158,7 @@ public class SingleItemActivity extends AppCompatActivity {
     }
 
     private void fetchItemDetails(String itemId) {
+
         String url = "https://ebay-backend-404323.wl.r.appspot.com/api/singleItem/" + itemId;
 
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -178,10 +179,18 @@ public class SingleItemActivity extends AppCompatActivity {
     }
 
     private void addItemToWishlist(ItemModel item) {
-        WishlistManager.getInstance(getApplicationContext()).addItemToWishlist(item, response -> Log.d("WISHLIST_API.Added", "Response: " + response.toString()), error -> Log.e("WISHLIST_API.ERROR", "Error: " + error.getMessage()));
+
+        WishlistManager.getInstance(getApplicationContext()).addItemToWishlist(item, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("WISHLIST_API.Added", "Response: " + response.toString());
+            }
+        }, error -> Log.e("WISHLIST_API.ERROR", "Error: " + error.getMessage()));
     }
 
     private void removeItemFromWishlist(String itemId) {
+
+
         WishlistManager.getInstance(getApplicationContext()).removeItemFromWishlist(itemId, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {

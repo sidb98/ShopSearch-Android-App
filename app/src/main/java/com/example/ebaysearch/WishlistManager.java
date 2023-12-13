@@ -22,6 +22,8 @@ public class WishlistManager {
 
     private List<ItemModel> wishlist;
 
+//    "how to create a Singleton class in android" prompt (20 line).  ChatGPT, 4 Sep. version, OpenAI, 20 Nov. 2023, chat.openai.com/chat.
+
     private WishlistManager(Context context) {
         ctx = context;
         requestQueue = getRequestQueue();
@@ -42,6 +44,7 @@ public class WishlistManager {
         return requestQueue;
     }
 
+//    "how to add an item to wishlist using Singleton Class" prompt (5 line).  ChatGPT, 4 Sep. version, OpenAI, 20 Nov. 2023, chat.openai.com/chat.
     public void addItemToWishlist(ItemModel item, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
         String url = "https://ebay-backend-404323.wl.r.appspot.com/api/favorite";
 
@@ -62,6 +65,8 @@ public class WishlistManager {
         // Add item to local wishlist
         wishlist.add(item);
     }
+
+//    "how to remove an item from wishlist using Singleton Class" prompt (5 line).  ChatGPT, 4 Sep. version, OpenAI, 20 Nov. 2023, chat.openai.com/chat.
 
     public void removeItemFromWishlist(String itemId, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
         String url = "https://ebay-backend-404323.wl.r.appspot.com/api/favorite/" + itemId;

@@ -80,6 +80,7 @@ public class SimilarFragment extends Fragment {
             }
         });
 
+
         itemViewModel.getItemData().observe(getViewLifecycleOwner(), item -> {
             // Use the item data here
             this.item = item;
@@ -91,6 +92,7 @@ public class SimilarFragment extends Fragment {
     }
 
     private void fetchSimilarItems(String itemId) {
+
         String url = "https://ebay-backend-404323.wl.r.appspot.com/api/similarItems/" + itemId;
 
         RequestQueue queue = Volley.newRequestQueue(getContext());
@@ -183,7 +185,7 @@ public class SimilarFragment extends Fragment {
             }
 
             Collections.sort(similarItemsList, comparator);
-            setupRecyclerView(similarItemsList); // Update RecyclerView with sorted list
+            setupRecyclerView(similarItemsList);
         }
     }
 

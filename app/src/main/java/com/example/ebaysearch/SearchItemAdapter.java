@@ -22,6 +22,7 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.Vi
 
     private List<ItemModel> wishlist;
 
+
     public SearchItemAdapter(ArrayList<ItemModel> searchItems, View.OnClickListener clickListener) {
         this.searchItems = searchItems;
         this.clickListener = clickListener;
@@ -46,10 +47,9 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.Vi
         } else {
             holder.itemShipping.setText("Shipping: $" + item.getShipping());
         }
-        // Set image using Glide or Picasso
         Picasso.get()
                 .load(item.getImage())
-                .error(R.drawable.ic_launcher_background) // optional, shown if there's an error loading the image
+                .error(R.drawable.ic_launcher_background)
                 .into(holder.itemImage);
 
         wishlist = WishlistManager.getInstance(holder.itemView.getContext()).getWishlist();
@@ -60,6 +60,7 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.Vi
         }
 
         holder.wishlist_cart.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 if (isItemInWishlist(item.getItemId())) {

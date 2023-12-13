@@ -25,7 +25,6 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
     public WishlistAdapter(List<ItemModel> item) {
         this.WishlistItem = item;
     }
-
     public void setOnWishlistChangeListener(OnWishlistChangeListener listener) {
         this.wishlistChangeListener = listener;
     }

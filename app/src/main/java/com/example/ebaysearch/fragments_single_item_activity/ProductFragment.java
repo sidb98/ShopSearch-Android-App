@@ -27,27 +27,16 @@ import java.util.List;
 
 
 public class ProductFragment extends Fragment {
-    JSONObject singleItemData;
-    ItemModel item;
-    JSONArray productImg;
-    String link;
-    String price;
-    String location;
-    String returnPolicy;
-    JSONObject ItemSpecifics;
 
-    TextView textViewTitle;
-    TextView textViewPriceWithShipping;
-
-    TextView textViewPrice;
-
-    TextView textViewBrand;
-
-    LinearLayout linearLayoutparent, progressBarLayout;
-
-    LinearLayout galleryLinearLayout;
-    LayoutInflater mInflater;
+    private TextView textViewTitle, textViewPrice, textViewPriceWithShipping, textViewBrand;
+    private LinearLayout linearLayoutparent, progressBarLayout, galleryLinearLayout;
+    private LayoutInflater mInflater;
     private List<String> imageUrls = new ArrayList<>();
+    private JSONObject singleItemData, ItemSpecifics;
+    private JSONArray productImg;
+    private String link, price, location, returnPolicy;
+    private ItemModel item;
+
 
 
     @Override
@@ -66,6 +55,7 @@ public class ProductFragment extends Fragment {
         textViewBrand = view.findViewById(R.id.textViewBrand);
 
 
+
         ViewModelItem itemViewModel = new ViewModelProvider(requireActivity()).get(ViewModelItem.class);
         itemViewModel.getItemData().observe(getViewLifecycleOwner(), item -> {
             // Use the item data here
@@ -74,10 +64,8 @@ public class ProductFragment extends Fragment {
             textViewTitle.setText(item.getTitle());
             textViewPriceWithShipping.setText(item.getPrice() + " with " + item.getShipping());
 
-
         });
 
-        // Observe the single item data
         itemViewModel.getSingleItemData().observe(getViewLifecycleOwner(), singleItemData -> {
             // Use the singleItemData here
             this.singleItemData = singleItemData;
@@ -123,6 +111,7 @@ public class ProductFragment extends Fragment {
 
         return view;
     }
+
 
     private void initViewGallery() {
         mInflater = LayoutInflater.from(getContext());

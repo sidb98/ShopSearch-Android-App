@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-//        https://www.youtube.com/watch?v=pIKdHeOjYNw  - tab layout code from this video
         tabLayout = findViewById(R.id.tabLayout);
         viewPager2 = findViewById(R.id.viewPager2);
         myViewPageAdapter = new ViewPageAdapterMainActivity(this);
@@ -74,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void fetchWishListItems() {
+
         String url = "https://ebay-backend-404323.wl.r.appspot.com/api/getKeys";
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(

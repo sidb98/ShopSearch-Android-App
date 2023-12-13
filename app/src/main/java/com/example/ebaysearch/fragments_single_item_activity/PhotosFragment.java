@@ -51,6 +51,7 @@ public class PhotosFragment extends Fragment {
 
 
         ViewModelItem itemViewModel = new ViewModelProvider(requireActivity()).get(ViewModelItem.class);
+
         itemViewModel.getItemData().observe(getViewLifecycleOwner(), item -> {
             // Use the item data here
             this.item = item;
@@ -65,6 +66,7 @@ public class PhotosFragment extends Fragment {
     }
 
     private void setPhotos() {
+
         mInflater = LayoutInflater.from(getContext());
         for (int i = 0; i < imageUrls.size(); i++) {
             View view = mInflater.inflate(R.layout.photo_item, photoLinearLayout, false);
@@ -78,8 +80,13 @@ public class PhotosFragment extends Fragment {
 
 
     private void callGoogleSearchApi() {
+
         RequestQueue queue = Volley.newRequestQueue(getContext());
-        String url = "https://ebay-backend-404323.wl.r.appspot.com/api/photos?productTitle=" + title;
+
+        String shortTitle = title.substring(0, Math.min(title.length(), 40));
+        String url = "https://ebay-backend-404323.wl.r.appspot.com/api/photos?productTitle=" + shortTitle;
+
+        Log.d("Google_API.Request", url);
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {

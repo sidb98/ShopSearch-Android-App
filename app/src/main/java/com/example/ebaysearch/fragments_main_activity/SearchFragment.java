@@ -50,7 +50,7 @@ public class SearchFragment extends Fragment {
     private EditText keywordEditText, milesEditText;
     private TextView keywordErrorTextView, zipcodeErrorTextView;
     private Spinner categorySpinner;
-    private CheckBox newCheckBox, usedCheckBox, unspecifiedCheckBox, localPickupCheckBox, freeShippingCheckBox, nearbySearchCheckBox ;
+    private CheckBox newCheckBox, usedCheckBox, unspecifiedCheckBox, localPickupCheckBox, freeShippingCheckBox, nearbySearchCheckBox;
     private RelativeLayout relativeLayoutDistance;
     private RadioButton currentLocationRadioButton, zipCodeRadioButton;
     private AutoCompleteTextView zipCodeAutoCompleteText;
@@ -58,6 +58,7 @@ public class SearchFragment extends Fragment {
     private LinearLayout mainContentLayout, progressBarLayout;
 
     private ArrayList<String> zipCodesList = new ArrayList<>();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -158,7 +159,6 @@ public class SearchFragment extends Fragment {
         String zipcode = zipCodeAutoCompleteText.getText().toString();
 
 
-
         if (keyword.isEmpty()) {
             Log.d("FORM_CHECK.KEYWORD", "performSearch: keyword is empty");
             Toast.makeText(getContext(), "Please fix all fields with errors", Toast.LENGTH_SHORT).show();
@@ -168,7 +168,16 @@ public class SearchFragment extends Fragment {
             }
             return;
         }
-
+        else {
+            keywordErrorTextView.setVisibility(View.GONE);
+        }
+        Log.d("FORM_CHECK", "Zipcode" + isNearbySearch + isZipcode + zipcode);
+        if (isNearbySearch && isZipcode && zipcode.isEmpty()) {
+            zipcodeErrorTextView.setVisibility(View.VISIBLE);
+            return;
+        }else {
+            zipcodeErrorTextView.setVisibility(View.GONE);
+        }
 
 
         miles = miles.isEmpty() ? "10" : miles;
@@ -187,14 +196,12 @@ public class SearchFragment extends Fragment {
         categoryValues.put("Music", "11233");
         categoryValues.put("Video Games & Consoles", "1249");
 
-
         String baseUrl = "https://ebay-backend-404323.wl.r.appspot.com/api/search";
 
         Uri.Builder builder = Uri.parse(baseUrl).buildUpon();
         builder.appendQueryParameter("keyword", keyword);
         builder.appendQueryParameter("distance", miles);
         builder.appendQueryParameter("zipcode", zipcode);
-
 
 
         if (!category.equals("All"))
@@ -217,6 +224,7 @@ public class SearchFragment extends Fragment {
         mainContentLayout.setVisibility(View.GONE);
 
 
+
         Context context = getContext();
         if (context != null) {
             RequestQueue queue = Volley.newRequestQueue(context);
@@ -237,7 +245,6 @@ public class SearchFragment extends Fragment {
                                 Intent intent = new Intent(getContext(), SearchedResultsActivity.class);
                                 intent.putExtra("items", items.toString());
                                 startActivity(intent);
-
 
 
                             } catch (JSONException e) {
@@ -276,6 +283,7 @@ public class SearchFragment extends Fragment {
     }
 
     private void fetchZipcodes(String inputValue) {
+
         String url = "https://ebay-backend-404323.wl.r.appspot.com/api/geolocation?startsWith=" + inputValue;
 
         RequestQueue queue = Volley.newRequestQueue(getContext());
@@ -293,6 +301,7 @@ public class SearchFragment extends Fragment {
                                 zipCodesList.add(jsonArray.getString(i));
                             }
                             Log.d("ZIPCODES", zipCodesList.toString());
+                            // From https://developer.android.com/reference/android/widget/AutoCompleteTextView
                             ArrayAdapter<String> adapter = new ArrayAdapter<>(
                                     getContext(),
                                     android.R.layout.simple_dropdown_item_1line,

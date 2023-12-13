@@ -27,6 +27,7 @@ public class SimilarItemAdapter extends RecyclerView.Adapter<SimilarItemAdapter.
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.similar_item_recycler_view_row, parent, false);
         return new ViewHolder(view);    }
 
+
     @Override
     public void onBindViewHolder(@NonNull SimilarItemAdapter.ViewHolder holder, int position) {
         ItemModel item = similarItems.get(position);
@@ -36,7 +37,7 @@ public class SimilarItemAdapter extends RecyclerView.Adapter<SimilarItemAdapter.
         holder.textViewShipping.setText(item.getShipping());
         holder.textViewDaysLeft.setText(String.format(item.getDaysLeft())+" Days Left");
 
-        // Use Picasso to load the image into the view
+
         Picasso.get().load(item.getImage()).into(holder.imageViewItem);
 
         // Optionally, if you want to handle item clicks:
@@ -65,10 +66,4 @@ public class SimilarItemAdapter extends RecyclerView.Adapter<SimilarItemAdapter.
         }
     }
 
-    // Method to update the list of items and notify the adapter
-//    public void updateSimilarItems(List<SimilarItemModel> newItems) {
-//        similarItems.clear();
-//        similarItems.addAll(newItems);
-//        notifyDataSetChanged();
-//    }
 }
